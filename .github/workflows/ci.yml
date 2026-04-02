@@ -50,4 +50,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Build docker image
-        run: docker build -t my-first-github-actions-wf
+        run: docker build -t my-first-github-actions-wf .
