@@ -3,3 +3,6 @@ def suma(a: int, b: int) -> int:
 
 def resta(a: int, b: int) -> int:
     return a - b
+
+def multiplicacion(a: int, b: int) -> int:
+    return a * b

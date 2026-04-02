@@ -7,3 +7,5 @@ def test_suma() -> None:
 def test_resta() -> None:
     assert resta(5, 3) == 2
 
+def test_multiplicacion() -> None:
+    assert multiplicacion(2, 3) == 6
