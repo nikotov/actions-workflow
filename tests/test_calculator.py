@@ -1,4 +1,4 @@
-from app.calculator import suma, resta
+from app.calculator import suma, resta, multiplicacion
 
 # Unitary tests
 def test_suma() -> None:
