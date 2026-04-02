@@ -1,4 +1,4 @@
-variable = 42;
+variable = 42
 
 def suma(a: int, b: int) -> int:
     return a + b
