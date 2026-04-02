@@ -41,3 +41,13 @@ jobs:
         run: pip install -r requirements.txt
       - name: run tests
         run: pytest
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Build docker image
+        run: docker build -t my-first-github-actions-wf
