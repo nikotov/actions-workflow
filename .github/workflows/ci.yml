@@ -6,9 +6,26 @@ on:
 
 
 jobs:
-  test:
+
+  lint:
     runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: run lint
+        run: ruff check .
+
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
     strategy:
       matrix:
         python-version: ["3.10", "3.13"]
