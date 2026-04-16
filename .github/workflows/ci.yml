@@ -22,14 +22,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: lint
+
     strategy:
       matrix:
         python-version: ["3.10", "3.13"]
+    
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/checkout@v6
+      - name: Set up python
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -50,7 +52,7 @@ jobs:
   docker-push:
     runs-on: ubuntu-latest
     needs: docker-build
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -89,9 +91,29 @@ jobs:
       - name: Deploy to production
         run: curl -X POST "${{ secrets.RENDER_PROD_DEPLOY_HOOK }}"
 
+  docker-push-dev:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push Docker image for development
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-first-github-actions-wf:dev
+
   deploy-dev:
     runs-on: ubuntu-latest
-    needs: docker-push
+    needs: docker-push-dev
     if: github.ref == 'refs/heads/dev'
 
     steps:
