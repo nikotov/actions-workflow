@@ -1,7 +1,4 @@
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def dummy_get():
-    return {'message': "Hello from docker hub image and CI/CD workflow"}
+pytest==8.3.2
+ruff==0.6.2
+uvicorn
+fastapi
