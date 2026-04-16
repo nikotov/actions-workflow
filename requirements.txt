@@ -1,4 +1,7 @@
-pytest==8.3.2
-ruff==0.6.2
-Flask==3.0.3
-gunicorn==22.0.0
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def dummy_get():
+    return {'message': "Hello from docker hub image and CI/CD workflow"}

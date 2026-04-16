@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "gunicorn app.web_service:app --bind 0.0.0.0:${PORT:-8000}"]
+CMD [ "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
